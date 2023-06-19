@@ -1,20 +1,13 @@
-import { CommonApis } from '@/apis/commonApis'
-import { CommonApisImp } from '@/apis/commonApisImp'
-import { inject, injectable, registry, delay } from 'tsyringe'
+import { CommonApisImp } from "@/apis/commonApisImp";
 
-@injectable()
-@registry([
-  {
-    token: 'CommonApis',
-    useToken: delay(() => CommonApisImp)
-  }
-])
 export class FileReader {
-  constructor(@inject('CommonApis') private commonApis: CommonApis) {
-    this.commonApis = commonApis
+  commonApis: CommonApisImp;
+
+  constructor() {
+    this.commonApis = new CommonApisImp();
   }
 
   Read = async (url: string): Promise<any> => {
-    return await this.commonApis.ReadFile(url)
-  }
+    return await this.commonApis.ReadFile(url);
+  };
 }
